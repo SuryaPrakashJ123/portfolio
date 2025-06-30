@@ -18,13 +18,16 @@
     
     <!-- Feather Icons -->
     <script src="https://unpkg.com/feather-icons"></script>
+    
+    <!-- GitHub Calendar CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/github-calendar@latest/dist/github-calendar-responsive.css"/>
 
     <!-- Custom Styles -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0a192f; /* Dark Navy */
-            color: #ccd6f6; /* Light Slate */
+            background-color: #ffffff; /* White Background */
+            color: #1f2937; /* Dark Gray Text */
         }
         #vanta-bg-container {
             position: fixed;
@@ -41,7 +44,7 @@
         .section-heading {
             position: relative;
             display: inline-block;
-            color: #e6f1ff; /* Lightest Slate */
+            color: #111827; /* Darkest Gray */
         }
         .section-heading::after {
             content: '';
@@ -51,19 +54,22 @@
             transform: translateX(-50%);
             width: 80px;
             height: 3px;
-            background-color: #00c6c6; /* Accent Teal */
+            background-color: #2563eb; /* Blue-600 */
         }
-        .accent-text { color: #00c6c6; }
+        .accent-text { color: #2563eb; }
         .btn-primary {
-            @apply bg-transparent border border-teal-400 text-teal-400 px-6 py-3 rounded-md transition-all duration-300 hover:bg-teal-400 hover:bg-opacity-10;
+            @apply bg-blue-600 border border-transparent text-white px-6 py-3 rounded-md transition-all duration-300 hover:bg-blue-700;
         }
         .btn-secondary {
-            @apply bg-slate-700 text-gray-200 px-6 py-3 rounded-md hover:bg-slate-600 transition-colors;
+            @apply bg-gray-200 border border-transparent text-gray-800 px-6 py-3 rounded-md hover:bg-gray-300 transition-colors;
         }
-        /* Make content sections have a semi-transparent background to show the animation behind */
-        .content-section {
-            background-color: rgba(10, 25, 47, 0.85); /* Dark Navy with opacity */
-            backdrop-filter: blur(4px);
+        .hero-text-shadow {
+            text-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2);
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid #e5e7eb;
         }
     </style>
 </head>
@@ -72,50 +78,71 @@
     <div id="vanta-bg-container"></div>
 
     <!-- Header -->
-    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-[#0a192f]/80 backdrop-blur-sm transition-shadow duration-300">
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm transition-shadow duration-300">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="text-2xl font-bold accent-text">SPJ</a>
             <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
-                <a href="#projects" class="text-gray-300 hover:accent-text">Projects</a>
-                <a href="#internships" class="text-gray-300 hover:accent-text">Internships</a>
-                <a href="#about" class="text-gray-300 hover:accent-text">About</a>
-                <a href="#contact" class="btn-primary py-2 px-4">Contact</a>
+                <a href="#why-hire-me" class="text-gray-600 hover:accent-text">Why Hire Me</a>
+                <a href="#projects" class="text-gray-600 hover:accent-text">Projects</a>
+                <a href="#internships" class="text-gray-600 hover:accent-text">Internships</a>
+                <a href="#about" class="text-gray-600 hover:accent-text">About</a>
+                <a href="#activity" class="text-gray-600 hover:accent-text">Activity</a>
+                <a href="#contact" class="bg-blue-600 text-white hover:bg-blue-700 text-xs px-4 py-2 rounded-md transition-colors">Contact</a>
             </div>
-             <button id="mobile-menu-btn" class="md:hidden text-gray-300">
+             <button id="mobile-menu-btn" class="md:hidden text-gray-700">
                 <i data-feather="menu"></i>
             </button>
         </nav>
     </header>
     
     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-[#0a192f] z-40 p-8">
+    <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-white z-40 p-8">
         <div class="flex justify-end">
-            <button id="close-mobile-menu-btn" class="text-gray-300"><i data-feather="x"></i></button>
+            <button id="close-mobile-menu-btn" class="text-gray-700"><i data-feather="x"></i></button>
         </div>
         <div class="flex flex-col items-center justify-center h-full space-y-8 text-lg">
-             <a href="#projects" class="text-gray-300 mobile-link">Projects</a>
-             <a href="#internships" class="text-gray-300 mobile-link">Internships</a>
-             <a href="#about" class="text-gray-300 mobile-link">About</a>
-             <a href="#contact" class="text-gray-300 mobile-link">Contact</a>
+             <a href="#why-hire-me" class="text-gray-700 mobile-link">Why Hire Me</a>
+             <a href="#projects" class="text-gray-700 mobile-link">Projects</a>
+             <a href="#internships" class="text-gray-700 mobile-link">Internships</a>
+             <a href="#about" class="text-gray-700 mobile-link">About</a>
+             <a href="#activity" class="text-gray-700 mobile-link">Activity</a>
+             <a href="#contact" class="text-gray-700 mobile-link">Contact</a>
         </div>
     </div>
 
     <main>
         <!-- Hero Section -->
-        <section id="hero" class="h-screen w-full flex flex-col items-center justify-center text-center relative text-white">
-            <div class="bg-black/40 p-8 rounded-xl backdrop-blur-sm">
-                <img src="https://i.ibb.co/Vc2ZcgdF/portfolio-pic.jpg" 
-                     alt="Surya Prakash Jayaseelan" 
-                     class="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-teal-400 object-cover" 
-                     data-aos="zoom-in"
-                     onerror="this.onerror=null;this.src='https://placehold.co/128x128/f87171/ffffff?text=Image+Error';">
-                <h1 class="text-4xl md:text-6xl font-extrabold text-gray-100" data-aos="fade-up">Surya Prakash Jayaseelan</h1>
-                <p class="mt-4 text-xl md:text-2xl text-gray-300" data-aos="fade-up" data-aos-delay="200">“Transforming Data into Insightful Action”</p>
-                <a href="#projects" class="mt-8 inline-block" data-aos="fade-up" data-aos-delay="400">
-                    <div class="w-10 h-16 border-2 border-gray-400 text-gray-400 rounded-full flex justify-center pt-2 animate-bounce hover:border-teal-400 hover:text-teal-400 transition-colors">
+        <section id="hero" class="h-screen w-full flex flex-col items-center justify-center text-center relative">
+            <div class="p-8">
+                <div class="mb-8" data-aos="zoom-in">
+                    <img src="https://i.ibb.co/TfT1dz7/Whats-App-Image-2025-06-29-at-20-16-40-1.jpg" alt="Surya Prakash Jayaseelan Portrait" class="relative z-10 w-48 h-48 mx-auto rounded-full object-cover border-4 border-white/30 shadow-2xl">
+                </div>
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <h1 class="text-5xl md:text-7xl font-extrabold text-gray-900 hero-text-shadow">Surya Prakash Jayaseelan</h1>
+                    <p class="mt-6 text-lg md:text-xl text-gray-700 max-w-3xl mx-auto hero-text-shadow">
+                        Business Analyst | Turning Messy Data into Clear Business Actions | Passionate About Strategy, Forecasting & Efficiency
+                    </p>
+                </div>
+                <a href="#why-hire-me" class="mt-12 inline-block" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-10 h-16 border-2 border-gray-400 text-gray-500 rounded-full flex justify-center pt-2 animate-bounce hover:border-blue-600 hover:text-blue-600 transition-colors">
                         <i data-feather="arrow-down"></i>
                     </div>
                 </a>
+            </div>
+        </section>
+
+        <!-- Why Hire Me Section -->
+        <section id="why-hire-me" class="py-20 md:py-28">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
+                    <div class="md:col-span-2" data-aos="fade-right">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6 section-heading hero-text-shadow">Why Hire Me?</h2>
+                        <p class="text-gray-700 leading-relaxed hero-text-shadow">I’ve been actively building my business analyst skill set through hands-on projects in data mining, performance analysis, and market forecasting. My internships have exposed me to real-world operations in logistics and digital systems, while I continue to upskill in Python, Tableau, and statistical tools. I’m driven to turn data into clear, strategic insights and eager to bring that value into a professional setting.</p>
+                    </div>
+                    <div class="flex justify-center" data-aos="fade-left" data-aos-delay="100">
+                        <i data-feather="target" class="w-32 h-32 text-blue-500 opacity-20"></i>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -126,11 +153,10 @@
                 
                 <div id="project-filters" class="flex flex-wrap justify-center gap-3 mb-10" data-aos="fade-up" data-aos-delay="100">
                     <button class="filter-btn active" data-filter="all">Show All</button>
-                    <!-- Other filters added by JS -->
                 </div>
 
                 <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div id="loader" class="col-span-full text-center text-gray-400"><p>Fetching projects from GitHub...</p></div>
+                    <div id="loader" class="col-span-full text-center text-gray-500"><p>Fetching projects from GitHub...</p></div>
                 </div>
             </div>
         </section>
@@ -141,30 +167,34 @@
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 section-heading" data-aos="fade-up">Virtual Internships</h2>
                  <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- Deloitte -->
-                    <a href="https://github.com/SuryaPrakashJ123" target="_blank" rel="noopener noreferrer" class="block bg-[#112240] rounded-lg shadow-lg overflow-hidden hover:shadow-cyan-500/20 transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-right">
-                        <img src="https://placehold.co/600x400/0a192f/00c6c6?text=Deloitte+Certificate" alt="Deloitte Internship Certificate" class="w-full h-48 object-cover">
-                        <div class="p-6 flex flex-col gap-4">
-                            <img src="https://i.ibb.co/jvb8zsmp/Deloitte-Logo-W.png" alt="Deloitte Logo" class="h-6 w-auto self-start">
-                            <h3 class="font-bold text-xl text-gray-200">Data Analyst Virtual Internship</h3>
-                            <p class="text-sm text-gray-400">Analyzed machine downtime data to create dashboards and present actionable insights for business improvement.</p>
-                            <div class="mt-auto pt-4 border-t border-slate-700">
-                                 <span class="bg-slate-700 text-teal-300 text-xs font-semibold mr-2 px-2.5 py-1 rounded-full">Tableau</span>
-                                 <span class="bg-slate-700 text-teal-300 text-xs font-semibold mr-2 px-2.5 py-1 rounded-full">Excel</span>
-                                 <span class="bg-slate-700 text-teal-300 text-xs font-semibold mr-2 px-2.5 py-1 rounded-full">Dashboarding</span>
+                    <a href="https://github.com/SuryaPrakashJ123" target="_blank" rel="noopener noreferrer" class="card block rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-right">
+                         <div class="p-6 flex flex-col gap-4">
+                            <img src="https://i.ibb.co/jvb8zsmp/Deloitte-Logo-W.png" alt="Deloitte Logo" class="h-6 w-auto self-start mb-4 filter invert">
+                            <h3 class="font-bold text-xl text-gray-800">Data Analyst Virtual Internship</h3>
+                            <p class="text-sm text-gray-600">Analyzed machine downtime data to create dashboards and present actionable insights for business improvement.</p>
+                             <div class="mt-4">
+                                <img src="https://i.ibb.co/xSLQYKmF/deloitte.png" alt="Deloitte Certificate" class="w-full h-auto rounded-md border border-gray-200">
+                             </div>
+                            <div class="mt-auto pt-4 border-t border-gray-200">
+                                 <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-1 rounded-full">Tableau</span>
+                                 <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-1 rounded-full">Excel</span>
+                                 <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-1 rounded-full">Dashboarding</span>
                             </div>
                         </div>
                     </a>
                     <!-- British Airways -->
-                    <a href="https://github.com/SuryaPrakashJ123/British-Airways-Data-Science-Science-Simulation-Task2" target="_blank" rel="noopener noreferrer" class="block bg-[#112240] rounded-lg shadow-lg overflow-hidden hover:shadow-cyan-500/20 transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-left">
-                        <img src="https://i.ibb.co/jvmBvGm6/Screenshot-2025-06-29-014531.png" alt="British Airways Internship Summary" class="w-full h-48 object-cover">
+                    <a href="https://github.com/SuryaPrakashJ123/British-Airways-Data-Science-Science-Simulation-Task2" target="_blank" rel="noopener noreferrer" class="card block rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-left">
                         <div class="p-6 flex flex-col gap-4">
-                            <img src="https://i.ibb.co/v41JwT5/images.jpg" alt="British Airways Logo" class="h-6 w-auto rounded self-start">
-                            <h3 class="font-bold text-xl text-gray-200">Data Science Virtual Experience</h3>
-                            <p class="text-sm text-gray-400">Used Python and web scraping to predict customer booking behavior and built regression models to identify key drivers.</p>
-                             <div class="mt-auto pt-4 border-t border-slate-700">
-                                 <span class="bg-slate-700 text-teal-300 text-xs font-semibold mr-2 px-2.5 py-1 rounded-full">Python</span>
-                                 <span class="bg-slate-700 text-teal-300 text-xs font-semibold mr-2 px-2.5 py-1 rounded-full">Regression</span>
-                                 <span class="bg-slate-700 text-teal-300 text-xs font-semibold mr-2 px-2.5 py-1 rounded-full">Scikit-learn</span>
+                            <img src="https://i.ibb.co/v41JwT5/images.jpg" alt="British Airways Logo" class="h-6 w-auto rounded self-start mb-4">
+                            <h3 class="font-bold text-xl text-gray-800">Data Science Virtual Experience</h3>
+                            <p class="text-sm text-gray-600">Used Python and web scraping to predict customer booking behavior and built regression models to identify key drivers.</p>
+                             <div class="mt-4">
+                                <img src="https://i.ibb.co/N60xhT05/british-airways.png" alt="British Airways Certificate" class="w-full h-auto rounded-md border border-gray-200">
+                             </div>
+                             <div class="mt-auto pt-4 border-t border-gray-200">
+                                 <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-1 rounded-full">Python</span>
+                                 <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-1 rounded-full">Regression</span>
+                                 <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-1 rounded-full">Scikit-learn</span>
                             </div>
                         </div>
                     </a>
@@ -173,48 +203,53 @@
         </section>
 
         <!-- About Me Section -->
-        <section id="about" class="py-20 md:py-28 content-section">
+        <section id="about" class="py-20 md:py-28">
             <div class="container mx-auto px-6">
-                <div class="grid grid-cols-1 lg:grid-cols-5 gap-16 items-center">
-                    <div class="lg:col-span-3" data-aos="fade-right">
-                        <h2 class="text-3xl md:text-4xl font-bold mb-8 section-heading">About Me</h2>
-                        <div class="space-y-4 text-gray-400">
-                            <p>I am a driven MSc Business Analytics student at Aston University with hands-on experience in data analysis, forecasting, and optimization. I’ve applied machine learning, regression, and dashboarding in real-world contexts including internships at Deloitte and British Airways.</p>
-                            <p>As a proactive problem-solver and effective communicator, I thrive on transforming complex datasets into actionable strategies that enhance business performance. Below are some of the key tools I work with.</p>
+                <div class="card rounded-lg shadow-lg p-8 md:p-12">
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                        <div data-aos="fade-right">
+                            <h2 class="text-3xl md:text-4xl font-bold mb-8 section-heading">About Me</h2>
+                            <div class="space-y-4 text-gray-600">
+                                <p>I am a driven MSc Business Analytics student at Aston University with hands-on experience in data analysis, forecasting, and optimization. I’ve applied machine learning, regression, and dashboarding in real-world contexts including internships at Deloitte and British Airways.</p>
+                                <p>As a proactive problem-solver and effective communicator, I thrive on transforming complex datasets into actionable strategies that enhance business performance.</p>
+                            </div>
+                             <div class="flex flex-wrap gap-4 mt-10">
+                                <a href="https://storage.googleapis.com/assistly-files/misc/SURYAintern.doc" download="Surya_Jayaseelan_CV.doc" class="btn-primary flex items-center gap-2">
+                                    <i data-feather="download"></i> Download Resume
+                                </a>
+                                <a href="https://www.linkedin.com/in/surya-prakash-jayaseelan-49ab99265" target="_blank" rel="noopener noreferrer" class="btn-secondary flex items-center gap-2">
+                                    <i data-feather="linkedin"></i> LinkedIn
+                                </a>
+                                 <a href="https://github.com/SuryaPrakashJ123" target="_blank" rel="noopener noreferrer" class="btn-secondary flex items-center gap-2">
+                                    <i data-feather="github"></i> GitHub
+                                </a>
+                            </div>
                         </div>
-                        <div class="flex flex-wrap gap-3 mt-6">
-                            <span class="bg-slate-700 text-teal-300 font-medium px-4 py-2 rounded">Python</span>
-                            <span class="bg-slate-700 text-teal-300 font-medium px-4 py-2 rounded">Tableau</span>
-                             <span class="bg-slate-700 text-teal-300 font-medium px-4 py-2 rounded">Power BI</span>
-                            <span class="bg-slate-700 text-teal-300 font-medium px-4 py-2 rounded">SPSS</span>
-                            <span class="bg-slate-700 text-teal-300 font-medium px-4 py-2 rounded">Excel</span>
-                        </div>
-                         <div class="flex flex-wrap gap-4 mt-10">
-                            <a href="https://storage.googleapis.com/assistly-files/misc/SURYAintern.doc" download="Surya_Jayaseelan_CV.doc" class="btn-primary flex items-center gap-2">
-                                <i data-feather="download"></i> Download Resume
-                            </a>
-                            <a href="https://www.linkedin.com/in/surya-prakash-jayaseelan-49ab99265" target="_blank" rel="noopener noreferrer" class="btn-secondary flex items-center gap-2">
-                                <i data-feather="linkedin"></i> LinkedIn
-                            </a>
-                             <a href="https://github.com/SuryaPrakashJ123" target="_blank" rel="noopener noreferrer" class="btn-secondary flex items-center gap-2">
-                                <i data-feather="github"></i> GitHub
-                            </a>
-                        </div>
-                    </div>
-                     <div class="lg:col-span-2 relative" data-aos="fade-left" data-aos-delay="100">
-                         <div class="bg-[#112240] rounded-lg p-1.5">
-                            <img src="https://i.ibb.co/Vc2ZcgdF/portfolio-pic.jpg" alt="Surya Prakash Jayaseelan" class="rounded-md w-full h-auto">
+                         <div class="relative" data-aos="fade-left" data-aos-delay="100">
+                             <div class="p-1.5 bg-gray-100 rounded-lg shadow-lg">
+                                <img src="https://i.ibb.co/3Yvfpqjs/Whats-App-Image-2025-06-29-at-18-51-14.jpg" alt="Surya Prakash Jayaseelan" class="rounded-md w-full h-auto">
+                             </div>
                          </div>
-                     </div>
+                    </div>
                 </div>
             </div>
         </section>
         
+        <!-- Live Contribution Activity Section -->
+        <section id="activity" class="py-20 md:py-28 content-section">
+             <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 section-heading" data-aos="fade-up">Live Contribution Activity</h2>
+                <div class="card p-6 rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="100">
+                   <div class="calendar">Loading GitHub activity...</div>
+                </div>
+             </div>
+        </section>
+        
         <!-- Contact Section -->
-        <section id="contact" class="py-20 md:py-28 content-section">
+        <section id="contact" class="py-20 md:py-28">
             <div class="container mx-auto px-6 text-center">
                 <h2 class="text-3xl md:text-4xl font-bold mb-4" data-aos="fade-up">Get In Touch</h2>
-                <p class="max-w-xl mx-auto text-gray-400 mb-10" data-aos="fade-up" data-aos-delay="100">I'm currently seeking new opportunities. My inbox is always open, whether you have a question or just want to say hi.</p>
+                <p class="max-w-xl mx-auto text-gray-600 mb-10" data-aos="fade-up" data-aos-delay="100">I'm currently seeking new opportunities. My inbox is always open, whether you have a question or just want to say hi.</p>
                 <div data-aos="fade-up" data-aos-delay="200">
                     <a href="mailto:suryaj7773@gmail.com" class="btn-primary text-lg">Say Hello</a>
                 </div>
@@ -236,6 +271,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.birds.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/github-calendar@latest/dist/github-calendar.min.js"></script>
     
     <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -253,28 +289,37 @@
                 minWidth: 200.00,
                 scale: 1.00,
                 scaleMobile: 1.00,
-                backgroundColor: 0x0a192f,
-                color1: 0x00c6c6, // Teal
-                color2: 0x007bff, // Blue
-                birdSize: 1.20,
-                wingSpan: 25.00,
+                backgroundColor: 0xffffff,
+                color1: 0x2563eb, // Dark Blue
+                color2: 0x06b6d4, // Cyan
+                birdSize: 1.10,
+                wingSpan: 20.00,
                 speedLimit: 4.00,
-                separation: 30.00,
-                alignment: 40.00,
-                cohesion: 30.00,
+                separation: 25.00,
+                alignment: 25.00,
+                cohesion: 25.00,
                 quantity: 3.00
             });
         } catch (e) {
             console.error("Vanta.js initialization failed: ", e);
-            document.getElementById('vanta-bg-container').style.backgroundColor = '#0a192f';
+            document.body.style.backgroundColor = '#ffffff';
+        }
+        
+        try {
+            GitHubCalendar(".calendar", "SuryaPrakashJ123", {
+                responsive: true,
+                tooltips: true
+            });
+        } catch(e) {
+            console.error("GitHub Calendar failed to load.", e);
         }
         
         const header = document.getElementById('header');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
-                header.classList.add('shadow-lg', 'shadow-black/20');
+                header.classList.add('shadow-md');
             } else {
-                header.classList.remove('shadow-lg', 'shadow-black/20');
+                header.classList.remove('shadow-md');
             }
         });
 
@@ -306,7 +351,7 @@
                 setupFilters(allRepos);
             } catch (error) {
                 console.error('Error fetching GitHub projects:', error);
-                if (projectGrid) projectGrid.innerHTML = `<p class="col-span-full text-center text-red-400">Failed to load projects from GitHub.</p>`;
+                if (projectGrid) projectGrid.innerHTML = `<p class="col-span-full text-center text-red-500">Failed to load projects from GitHub.</p>`;
             } finally {
                 if (loader) loader.remove();
             }
@@ -317,7 +362,7 @@
             projectGrid.innerHTML = '';
             repos.forEach(repo => {
                 const card = document.createElement('div');
-                card.className = 'project-card bg-[#112240] rounded-lg p-6 shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 flex flex-col';
+                card.className = 'card rounded-lg p-6 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col';
                 card.setAttribute('data-aos', 'fade-up');
                 
                 const repoName = repo.name.replace(/[-_]/g, ' ');
@@ -326,7 +371,7 @@
                 const repoTopics = repo.topics || [];
                 card.dataset.topics = repoTopics.join(' ');
 
-                const topicsHTML = repoTopics.map(topic => `<span class="bg-slate-700 text-teal-300 text-xs font-semibold mr-2 mb-2 px-2.5 py-1 rounded-full">${topic}</span>`).join('');
+                const topicsHTML = repoTopics.map(topic => `<span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-1 rounded-full">${topic}</span>`).join('');
 
                 card.innerHTML = `
                     <div class="flex-grow">
@@ -334,10 +379,10 @@
                             <i data-feather="folder" class="w-10 h-10 accent-text"></i>
                             <a href="${repoLink}" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:accent-text"><i data-feather="github"></i></a>
                         </header>
-                        <h3 class="text-xl font-bold mb-2 text-gray-200 capitalize">${repoName}</h3>
-                        <p class="text-gray-400 text-sm mb-4">${repoDesc}</p>
+                        <h3 class="text-xl font-bold mb-2 text-gray-800 capitalize">${repoName}</h3>
+                        <p class="text-gray-600 text-sm mb-4">${repoDesc}</p>
                     </div>
-                    <footer class="mt-4 pt-4 border-t border-slate-700">
+                    <footer class="mt-4 pt-4 border-t border-gray-200">
                         <div class="flex flex-wrap">
                             ${topicsHTML || '<span class="text-xs text-gray-500">No topics</span>'}
                         </div>
@@ -390,14 +435,17 @@
         const style = document.createElement('style');
         style.innerHTML = `
             .filter-btn {
-                padding: 8px 16px; border: 1px solid #0891b2; border-radius: 9999px;
-                background-color: transparent; color: #0891b2; font-size: 14px;
+                padding: 8px 16px; border: 1px solid #d1d5db; border-radius: 9999px;
+                background-color: white; color: #4b5563; font-size: 14px;
                 cursor: pointer; transition: all 0.2s ease;
             }
-            .filter-btn:hover { background-color: rgba(6, 182, 212, 0.1); }
+            .filter-btn:hover { background-color: #f3f4f6; }
             .filter-btn.active {
-                background-color: #0891b2; color: #0a192f;
+                background-color: #2563eb; color: white; border-color: #2563eb;
             }
+            /* Styling for GitHub Calendar */
+            .calendar { color: #374151; }
+            .calendar .contrib-legend { color: #6b7280; }
         `;
         document.head.appendChild(style);
     });
